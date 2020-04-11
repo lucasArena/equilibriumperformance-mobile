@@ -1,26 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { WorkoutContainer, Group, Title, WorkoutText } from './styles';
+import {
+  WorkoutList,
+  WorkoutContainer,
+  Group,
+  Title,
+  WorkoutText,
+  Label,
+  StudentInfo,
+  StudentName,
+  StudentBand,
+} from './styles';
 
 import Background from '../../components/Background';
 
 export default function Workouts({ route, navigation }) {
-  const workouts = route.params;
+  const { workouts, studentInfo } = route.params;
+
   return (
     <Background alignItems={false}>
-      {workouts.map(({ workout }) => (
-        <WorkoutContainer
-          key={workout.id}
-          onPress={navigation.push('StudentWorkout', workout.exercises)}
-        >
-          <Title>Treino {workout.id}</Title>
-          <Group>
-            <WorkoutText>{workout.description}</WorkoutText>
-            <WorkoutText>Faixa Branca</WorkoutText>
-          </Group>
-        </WorkoutContainer>
-      ))}
+      <StudentInfo>
+        <StudentName color="#FFF">{studentInfo.name} - </StudentName>
+        <StudentBand color={studentInfo.band.color}>
+          {studentInfo.band.name}
+        </StudentBand>
+      </StudentInfo>
+      <WorkoutList
+        data={workouts}
+        keyExtractor={({ workout }) => String(workout.id)}
+        renderItem={({ item: { workout, finished } }) => (
+          <WorkoutContainer
+            backgroundColor={workout.band.color}
+            finished={finished}
+            onPress={() =>
+              navigation.push('StudentWorkout', {
+                exercises: workout.exercises,
+                student_id: studentInfo.id,
+                workout_id: workout.id,
+              })
+            }
+          >
+            <Group>
+              {console.tron.log(workout)}
+              <Title>Treino {workout.id}</Title>
+              <Label finished={finished}>Finalizado</Label>
+            </Group>
+            <Group>
+              <WorkoutText>{workout.description}</WorkoutText>
+              <WorkoutText>Faixa {workout.band.name}</WorkoutText>
+            </Group>
+          </WorkoutContainer>
+        )}
+      />
     </Background>
   );
 }

@@ -17,9 +17,9 @@ export default function SelectStudent({ navigation }) {
   async function handleStudent() {
     try {
       const workouts = await api.get(`/student/${nickname}/workouts`);
-      navigation.push('Workouts', workouts);
+      navigation.navigate('Workouts', workouts);
     } catch (err) {
-      Alert('Aluno inexistente');
+      Alert.alert('Aluno inexistente');
     }
   }
 

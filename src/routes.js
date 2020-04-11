@@ -6,6 +6,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SignIn from './pages/SignIn';
 import SelectStudent from './pages/SelectStudent';
 import Workouts from './pages/Workouts';
+import StudentWorkout from './pages/StudentWorkout';
+
+import Header from './components/Header';
 
 export default function Routes() {
   const signed = useSelector(state => state.auth.signed);
@@ -25,11 +28,27 @@ export default function Routes() {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerShown: false,
+          headerStyle: {
+            backgroundColor: '#000',
+          },
+          header: props => <Header {...props} />,
         }}
       >
-        <Stack.Screen name="SelectStudent" component={SelectStudent} />
-        <Stack.Screen name="Workouts" component={Workouts} />
+        <Stack.Screen
+          name="SelectStudent"
+          component={SelectStudent}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Workouts"
+          component={Workouts}
+          options={{
+            title: 'Treinos',
+          }}
+        />
+        <Stack.Screen name="StudentWorkout" component={StudentWorkout} />
       </Stack.Navigator>
     </NavigationContainer>
   );
