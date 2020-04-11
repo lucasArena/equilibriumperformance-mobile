@@ -1,0 +1,5 @@
+import styled from 'styled-components/native';
+
+export const Image = styled.Image`
+  margin-bottom: 10px;
+`;
